@@ -36,7 +36,6 @@ typedef struct {
 typedef struct {
     Point2D location;
     Color color;
-    enum Directoins to;
 } Apple;
 
 typedef struct {
@@ -44,3 +43,19 @@ typedef struct {
     ChangePointsList changePoints;
     enum Directoins direction;
 } Snake;
+
+int getRandomInt(int min, int max);
+void sleepMillis(unsigned long int milliseconds);
+
+void Snake_render(Snake snake);
+void Snake_changeDirection(Snake *snake, enum Directoins newDirection);
+void Snake_move(Snake *snake);
+
+BodyPart Body_createPart(enum Directoins direction, Point2D location, Color color);
+void Body_push(Body *body, BodyPart newPart);
+
+Apple Apple_generate(unsigned int maxX, unsigned int maxY);
+void Apple_render(Apple apple);
+
+void ChangePoints_push(ChangePointsList *changePoints, ChangePoint newPoint);
+void ChangePoints_shift(ChangePointsList *changePoints);
