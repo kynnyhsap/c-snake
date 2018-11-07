@@ -4,6 +4,8 @@
 #include "header.h"
 
 Apple Apple_generate(unsigned int maxX, unsigned int maxY) {
+    // todo: check if apple generated on snake body
+
     Apple apple = {
         .color = {255, 0, 0},
         .location =

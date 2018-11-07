@@ -25,7 +25,26 @@ void Snake_changeDirection(Snake *snake, enum Directoins newDirection) {
     ChangePoints_push(&snake->changePoints, newChangePoint);
 }
 
-void Snake_move(Snake *snake) {
+void Snake_tryEatApple(Snake *snake, Apple *apple) {
+    BodyPart head = snake->body.parts[0];
+
+    if (head.location.x == apple->location.x && head.location.y == apple->location.y) {
+        // todo: remake
+        Color greenColor = {
+            .R = 0,
+            .G = 255,
+            .B = 0,
+        };
+
+        BodyPart newPart = Body_createPart(snake->direction, apple->location, greenColor);
+
+        Body_push(&snake->body, newPart);
+
+        *apple = Apple_generate(100, 100);  // todo: dynamic size limits
+    }
+}
+
+void Snake_move(Snake *snake, Apple *apple) {
     for (int i = 0; i < snake->body.length; i++) {
         BodyPart *part = &snake->body.parts[i];
 
@@ -57,5 +76,7 @@ void Snake_move(Snake *snake) {
                 }
             }
         }
+
+        Snake_tryEatApple(snake, apple);
     }
 }

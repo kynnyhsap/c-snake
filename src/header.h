@@ -39,6 +39,7 @@ typedef struct {
 } Apple;
 
 typedef struct {
+    unsigned int score;
     Body body;
     ChangePointsList changePoints;
     enum Directoins direction;
@@ -49,7 +50,8 @@ void sleepMillis(unsigned long int milliseconds);
 
 void Snake_render(Snake snake);
 void Snake_changeDirection(Snake *snake, enum Directoins newDirection);
-void Snake_move(Snake *snake);
+void Snake_move(Snake *snake, Apple *apple);
+void Snake_tryEatApple(Snake *snake, Apple *apple);
 
 BodyPart Body_createPart(enum Directoins direction, Point2D location, Color color);
 void Body_push(Body *body, BodyPart newPart);
