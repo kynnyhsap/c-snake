@@ -10,12 +10,17 @@ void Body_push(Body *body, BodyPart newPart) {
     body->length              = newLength;
 }
 
-BodyPart Body_createPart(enum Directoins direction, Point2D location, Color color) {
+BodyPart Body_createPart(int bodyLength, enum Directoins direction, Point2D location) {
     BodyPart part = {
         .direction = direction,
         .location  = location,
-        .color     = color,
     };
+
+    if (bodyLength % 2 == 0) {
+        part.color = COLOR_GREEN;
+    } else {
+        part.color = COLOR_GREEN_LIGHT;
+    }
 
     return part;
 }
