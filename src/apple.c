@@ -1,9 +1,11 @@
 #include <progbase/canvas.h>
 #include <stdlib.h>
 
-#include "header.h"
+#include "apple.h"
+#include "body.h"
+#include "utils.h"
 
-Apple Apple_generate(Snake snake, Box box) {
+Apple Apple_generate(Body snakeBody, Box box) {
     Apple apple = {
         .color = {255, 0, 0},
         .location =
@@ -14,11 +16,11 @@ Apple Apple_generate(Snake snake, Box box) {
     };
 
     // check if apple generated on snake body
-    for (int i = 0; i < snake.body.length; i++) {
-        BodyPart part = snake.body.parts[i];
+    for (int i = 0; i < snakeBody.length; i++) {
+        BodyPart part = snakeBody.parts[i];
 
         if (part.location.x == apple.location.x && part.location.y == apple.location.y) {
-            return Apple_generate(snake, box);
+            return Apple_generate(snakeBody, box);
         }
     }
 

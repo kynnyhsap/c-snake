@@ -3,7 +3,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "header.h"
+#include "apple.h"
+#include "snake.h"
+#include "utils.h"
 
 void render(Snake snake, Apple apple) {
     Canvas_beginDraw();
@@ -24,7 +26,7 @@ int main() {
     Canvas_invertYOrientation();
 
     Snake snake = Snake_create(4, RIGHT, 10, 10);
-    Apple apple = Apple_generate(snake, box);
+    Apple apple = Apple_generate(snake.body, box);
 
     render(snake, apple);
 

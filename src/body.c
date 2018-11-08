@@ -1,24 +1,7 @@
 #include <stdlib.h>
 
-#include "header.h"
-
-const Color COLOR_GREEN = {
-    .R = 102,
-    .G = 204,
-    .B = 0,
-};
-
-const Color COLOR_GREEN_DARK = {
-    .R = 0,
-    .G = 153,
-    .B = 0,
-};
-
-const Color COLOR_GREEN_LIGHT = {
-    .R = 153,
-    .G = 255,
-    .B = 51,
-};
+#include "body.h"
+#include "utils.h"
 
 void Body_push(Body *body, BodyPart newPart) {
     const int newLength = body->length + 1;

@@ -2,7 +2,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#include "header.h"
+#include "snake.h"
+#include "apple.h"
 
 void Snake_render(Snake snake) {
     for (int i = 0; i < snake.body.length; i++) {
@@ -89,7 +90,7 @@ void Snake_tryEatApple(Snake *snake, Apple *apple, Box box) {
 
         Body_push(&snake->body, newPart);
 
-        *apple = Apple_generate(*snake, box);  // todo: dynamic size limits
+        *apple = Apple_generate(snake->body, box);  // todo: dynamic size limits
     }
 }
 

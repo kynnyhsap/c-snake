@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "header.h"
+#include "change-points.h"
 
 void ChangePoints_push(ChangePointsList *changePoints, ChangePoint newPoint) {
     const int newLength = changePoints->length + 1;
