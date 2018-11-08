@@ -5,7 +5,7 @@
 #include "body.h"
 #include "utils.h"
 
-Apple Apple_generate(Body snakeBody, Box box) {
+Apple Apple_spawn(Body snakeBody, Box box) {
     Apple apple = {
         .color = {255, 0, 0},
         .location =
@@ -20,14 +20,14 @@ Apple Apple_generate(Body snakeBody, Box box) {
         BodyPart part = snakeBody.parts[i];
 
         if (part.location.x == apple.location.x && part.location.y == apple.location.y) {
-            return Apple_generate(snakeBody, box);
+            return Apple_spawn(snakeBody, box);
         }
     }
 
     return apple;
 }
 
-void Apple_render(Apple apple) {
-    Canvas_setColorRGB(apple.color.R, apple.color.G, apple.color.B);
-    Canvas_putPixel(apple.location.x, apple.location.y);
+void Apple_render(Apple *apple) {
+    Canvas_setColorRGB(apple->color.R, apple->color.G, apple->color.B);
+    Canvas_putPixel(apple->location.x, apple->location.y);
 }

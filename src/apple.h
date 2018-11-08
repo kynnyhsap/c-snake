@@ -12,7 +12,7 @@ typedef struct {
     Color color;
 } Apple;
 
-Apple Apple_generate(Body snakeBody, Box box);
-void Apple_render(Apple apple);
+Apple Apple_spawn(Body snakeBody, Box box);
+void Apple_render(Apple *apple);
 
 #endif

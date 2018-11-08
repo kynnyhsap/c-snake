@@ -7,7 +7,7 @@
 #include "snake.h"
 #include "utils.h"
 
-void render(Snake snake, Apple apple) {
+void render(Snake *snake, Apple *apple) {
     Canvas_beginDraw();
     Snake_render(snake);
     Apple_render(apple);
@@ -25,10 +25,10 @@ int main() {
     Canvas_setSize(box.w, box.h);
     Canvas_invertYOrientation();
 
-    Snake snake = Snake_create(4, RIGHT, 10, 10);
-    Apple apple = Apple_generate(snake.body, box);
+    Snake snake = Snake_new(4, RIGHT, 10, 10);
+    Apple apple = Apple_spawn(snake.body, box);
 
-    render(snake, apple);
+    render(&snake, &apple);
 
     char keyCode = 0;
     do {
@@ -53,7 +53,7 @@ int main() {
             }
         }
 
-        render(snake, apple);
+        render(&snake, &apple);
     } while (keyCode != '\n');
 
     return 0;

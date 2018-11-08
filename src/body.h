@@ -14,7 +14,8 @@ typedef struct {
     int length;
 } Body;
 
-BodyPart Body_createPart(int bodyLength, enum Directions direction, Point2D location);
+BodyPart Body_newPart(int bodyLength, enum Directions direction, Point2D location);
+Body Body_new(int bodyLength, enum Directions direction, int headX, int headY);
 void Body_push(Body *body, BodyPart newPart);
 
 #endif

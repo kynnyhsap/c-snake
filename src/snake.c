@@ -2,34 +2,25 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#include "snake.h"
 #include "apple.h"
+#include "snake.h"
 
-void Snake_render(Snake snake) {
-    for (int i = 0; i < snake.body.length; i++) {
-        BodyPart part = snake.body.parts[i];
+void Snake_render(Snake *snake) {
+    for (int i = 0; i < snake->body.length; i++) {
+        BodyPart part = snake->body.parts[i];
 
         Canvas_setColorRGB(part.color.R, part.color.G, part.color.B);
         Canvas_putPixel(part.location.x, part.location.y);
     }
 }
 
-Snake Snake_create(int length, enum Directions direction, int headX, int headY) {
+Snake Snake_new(int length, enum Directions direction, int headX, int headY) {
     Snake snake = {
         .score     = 0,
         .direction = direction,
-        .body      = {.length = 0},
     };
 
-    snake.body.parts = (BodyPart *)malloc(length * sizeof(BodyPart));
-
-    for (int i = 0; i < length; i++) {
-        Point2D location = {.x = headX - i, .y = headY};
-
-        Body_push(&snake.body, Body_createPart(snake.body.length, RIGHT, location));
-    }
-
-    snake.body.parts[0].color = COLOR_GREEN_DARK;  // highlight head =)
+    snake.body = Body_new(length, direction, headX, headY);
 
     return snake;
 }
@@ -86,11 +77,11 @@ void Snake_tryEatApple(Snake *snake, Apple *apple, Box box) {
             }
         }
 
-        BodyPart newPart = Body_createPart(snake->body.length, tail.direction, location);
+        BodyPart newPart = Body_newPart(snake->body.length, tail.direction, location);
 
         Body_push(&snake->body, newPart);
 
-        *apple = Apple_generate(snake->body, box);  // todo: dynamic size limits
+        *apple = Apple_spawn(snake->body, box);  // todo: dynamic size limits
     }
 }
 
