@@ -81,7 +81,9 @@ void Snake_tryEatApple(Snake *snake, Apple *apple, Box box) {
 
         Body_push(&snake->body, newPart);
 
-        *apple = Apple_spawn(snake->body, box);  // todo: dynamic size limits
+        *apple = Apple_spawn(snake->body, box);
+
+        snake->score++;
     }
 }
 
@@ -114,7 +116,6 @@ void Snake_move(Snake *snake, Apple *apple, Box box, enum Directions newDirectio
             }
         }
 
-        // ... change direction if need
         for (int j = 0; j < snake->changePoints.length; j++) {
             ChangePoint changePoint = snake->changePoints.list[j];
 
