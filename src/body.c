@@ -2,6 +2,24 @@
 
 #include "header.h"
 
+const Color COLOR_GREEN = {
+    .R = 102,
+    .G = 204,
+    .B = 0,
+};
+
+const Color COLOR_GREEN_DARK = {
+    .R = 0,
+    .G = 153,
+    .B = 0,
+};
+
+const Color COLOR_GREEN_LIGHT = {
+    .R = 153,
+    .G = 255,
+    .B = 51,
+};
+
 void Body_push(Body *body, BodyPart newPart) {
     const int newLength = body->length + 1;
     body->parts         = (BodyPart *)realloc(body->parts, newLength * sizeof(BodyPart));
@@ -10,7 +28,7 @@ void Body_push(Body *body, BodyPart newPart) {
     body->length              = newLength;
 }
 
-BodyPart Body_createPart(int bodyLength, enum Directoins direction, Point2D location) {
+BodyPart Body_createPart(int bodyLength, enum Directions direction, Point2D location) {
     BodyPart part = {
         .direction = direction,
         .location  = location,

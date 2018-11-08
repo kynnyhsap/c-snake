@@ -1,4 +1,6 @@
 #include <progbase/canvas.h>
+#include <stdbool.h>
+#include <stdlib.h>
 
 #include "header.h"
 
@@ -11,8 +13,36 @@ void Snake_render(Snake snake) {
     }
 }
 
-void Snake_changeDirection(Snake *snake, enum Directoins newDirection) {
-    // todo: disallow change if new direction invertable to current
+Snake Snake_create(int length, enum Directions direction, int headX, int headY) {
+    Snake snake = {
+        .score     = 0,
+        .direction = direction,
+        .body      = {.length = 0},
+    };
+
+    snake.body.parts = (BodyPart *)malloc(length * sizeof(BodyPart));
+
+    for (int i = 0; i < length; i++) {
+        Point2D location = {.x = headX - i, .y = headY};
+
+        Body_push(&snake.body, Body_createPart(snake.body.length, RIGHT, location));
+    }
+
+    snake.body.parts[0].color = COLOR_GREEN_DARK;  // highlight head =)
+
+    return snake;
+}
+
+bool Snake_directionsOpposite(enum Directions d1, enum Directions d2) {
+    if (d1 != d2) {
+        if ((d1 == RIGHT || d1 == LEFT) && (d2 == RIGHT || d2 == LEFT)) return true;
+        if ((d1 == UP || d1 == DOWN) && (d2 == UP || d2 == DOWN)) return true;
+    }
+
+    return false;
+}
+
+void Snake_changeDirection(Snake *snake, enum Directions newDirection) {
     snake->direction = newDirection;
 
     BodyPart head = snake->body.parts[0];
@@ -28,7 +58,7 @@ void Snake_changeDirection(Snake *snake, enum Directoins newDirection) {
     ChangePoints_push(&snake->changePoints, newChangePoint);
 }
 
-void Snake_tryEatApple(Snake *snake, Apple *apple) {
+void Snake_tryEatApple(Snake *snake, Apple *apple, Box box) {
     BodyPart head = snake->body.parts[0];
 
     if (head.location.x == apple->location.x && head.location.y == apple->location.y) {
@@ -59,11 +89,19 @@ void Snake_tryEatApple(Snake *snake, Apple *apple) {
 
         Body_push(&snake->body, newPart);
 
-        *apple = Apple_generate(10, 30);  // todo: dynamic size limits
+        *apple = Apple_generate(*snake, box);  // todo: dynamic size limits
     }
 }
 
-void Snake_move(Snake *snake, Apple *apple) {
+void Snake_move(Snake *snake, Apple *apple, Box box, enum Directions newDirection) {
+    if (newDirection != snake->direction) {
+        if (Snake_directionsOpposite(snake->direction, newDirection)) {
+            return;
+        }
+
+        Snake_changeDirection(snake, newDirection);
+    }
+
     for (int i = 0; i < snake->body.length; i++) {
         switch (snake->body.parts[i].direction) {
             case UP: {
@@ -99,6 +137,6 @@ void Snake_move(Snake *snake, Apple *apple) {
             }
         }
 
-        Snake_tryEatApple(snake, apple);
+        Snake_tryEatApple(snake, apple, box);
     }
 }

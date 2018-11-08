@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "header.h"
+
 int getRandomInt(int min, int max) { return (rand() % (max - min + 1)) + min; }
 
 void sleepMillis(unsigned long int milliseconds) {

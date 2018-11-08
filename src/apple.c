@@ -3,22 +3,22 @@
 
 #include "header.h"
 
-Apple Apple_generate(Snake *snake, unsigned int maxX, unsigned int maxY) {
+Apple Apple_generate(Snake snake, Box box) {
     Apple apple = {
         .color = {255, 0, 0},
         .location =
             {
-                .x = getRandomInt(0, maxX),
-                .y = getRandomInt(0, maxY),
+                .x = getRandomInt(2, box.w - 2),
+                .y = getRandomInt(2, box.h - 2),
             },
     };
 
     // check if apple generated on snake body
-    for (int i = 0; i < snake->body.length; i++) {
-        BodyPart part = snake->body.parts[i];
+    for (int i = 0; i < snake.body.length; i++) {
+        BodyPart part = snake.body.parts[i];
 
         if (part.location.x == apple.location.x && part.location.y == apple.location.y) {
-            return Apple_generate(snake, maxX, maxY);
+            return Apple_generate(snake, box);
         }
     }
 
