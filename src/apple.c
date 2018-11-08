@@ -3,9 +3,7 @@
 
 #include "header.h"
 
-Apple Apple_generate(unsigned int maxX, unsigned int maxY) {
-    // todo: check if apple generated on snake body
-
+Apple Apple_generate(Snake *snake, unsigned int maxX, unsigned int maxY) {
     Apple apple = {
         .color = {255, 0, 0},
         .location =
@@ -14,6 +12,15 @@ Apple Apple_generate(unsigned int maxX, unsigned int maxY) {
                 .y = getRandomInt(0, maxY),
             },
     };
+
+    // check if apple generated on snake body
+    for (int i = 0; i < snake->body.length; i++) {
+        BodyPart part = snake->body.parts[i];
+
+        if (part.location.x == apple.location.x && part.location.y == apple.location.y) {
+            return Apple_generate(snake, maxX, maxY);
+        }
+    }
 
     return apple;
 }

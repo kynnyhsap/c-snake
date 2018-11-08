@@ -61,7 +61,7 @@ void Snake_tryEatApple(Snake *snake, Apple *apple);
 BodyPart Body_createPart(int bodyLength, enum Directoins direction, Point2D location);
 void Body_push(Body *body, BodyPart newPart);
 
-Apple Apple_generate(unsigned int maxX, unsigned int maxY);
+Apple Apple_generate(Snake *snake, unsigned int maxX, unsigned int maxY);
 void Apple_render(Apple apple);
 
 void ChangePoints_push(ChangePointsList *changePoints, ChangePoint newPoint);
