@@ -6,7 +6,7 @@ EXECUTABLE = ./a.out
 SOURCE = ./src/*.c
 
 build:
-	$(CC) -o $(EXECUTABLE) $(CFLAGS) $(LIBS) $(SOURCE) 
+	@ $(CC) -o $(EXECUTABLE) $(CFLAGS) $(LIBS) $(SOURCE) 
 
 clean:
 	@ rm -rf $(EXECUTABLE)
