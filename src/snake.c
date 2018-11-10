@@ -34,7 +34,14 @@ bool Snake_directionsOpposite(enum Directions d1, enum Directions d2) {
     return false;
 }
 
+bool Snake_directionsEquals(enum Directions d1, enum Directions d2) { return d1 == d2; }
+
 void Snake_changeDirection(Snake *snake, enum Directions newDirection) {
+    if (Snake_directionsOpposite(snake->direction, newDirection) ||
+        Snake_directionsEquals(snake->direction, newDirection)) {
+        return;
+    }
+
     snake->direction = newDirection;
 
     BodyPart head = snake->body.parts[0];
@@ -87,15 +94,7 @@ void Snake_tryEatApple(Snake *snake, Apple *apple, Box box) {
     }
 }
 
-void Snake_move(Snake *snake, Apple *apple, Box box, enum Directions newDirection) {
-    if (newDirection != snake->direction) {
-        if (Snake_directionsOpposite(snake->direction, newDirection)) {
-            return;
-        }
-
-        Snake_changeDirection(snake, newDirection);
-    }
-
+void Snake_move(Snake *snake, Apple *apple, Box box) {
     for (int i = 0; i < snake->body.length; i++) {
         switch (snake->body.parts[i].direction) {
             case UP: {
