@@ -12,6 +12,14 @@ void render(Snake *snake, Apple *apple) {
     Snake_render(snake);
     Apple_render(apple);
     Canvas_endDraw();
+
+    Console_setCursorAttribute(FG_CYAN);
+    Console_setCursorAttribute(BG_BLACK);
+    Console_setCursorPosition(1, 1);
+    printf("Score: %i", snake->score);
+    Console_setCursorAttribute(FG_BLACK);  // fg need to be the same color with bg
+
+    Console_hideCursor();
 }
 
 int main() {
@@ -19,7 +27,10 @@ int main() {
 
     struct ConsoleSize consoleSize = Console_size();
 
-    Box box = {.w = consoleSize.columns, .h = consoleSize.rows * 2};
+    Box box = {
+        .w = consoleSize.columns,
+        .h = consoleSize.rows * 2,
+    };
 
     Console_clear();
     Canvas_setSize(box.w, box.h);
@@ -30,31 +41,45 @@ int main() {
 
     render(&snake, &apple);
 
-    char keyCode = 0;
-    do {
-        keyCode = Console_getChar();
+    bool quitGame = false;
+    while (1) {
+        if (quitGame) break;
 
-        switch (keyCode) {
-            case BUTTON_UP: {
-                Snake_move(&snake, &apple, box, UP);
-                break;
+        if (Console_isKeyDown()) {
+            char key = getchar();
+
+            switch (key) {
+                case BUTTON_MOVE_UP: {
+                    Snake_changeDirection(&snake, UP);
+                    break;
+                }
+                case BUTTON_MOVE_DOWN: {
+                    Snake_changeDirection(&snake, DOWN);
+                    break;
+                }
+                case BUTTON_MOVE_LEFT: {
+                    Snake_changeDirection(&snake, LEFT);
+                    break;
+                }
+                case BUTTON_MOVE_RIGHT: {
+                    Snake_changeDirection(&snake, RIGHT);
+                    break;
+                }
+                case BUTTON_QUIT_GAME: {
+                    quitGame = true;
+                    break;
+                }
             }
-            case BUTTON_DOWN: {
-                Snake_move(&snake, &apple, box, DOWN);
-                break;
-            }
-            case BUTTON_LEFT: {
-                Snake_move(&snake, &apple, box, LEFT);
-                break;
-            }
-            case BUTTON_RIGHT: {
-                Snake_move(&snake, &apple, box, RIGHT);
-                break;
-            }
+        } else {
+            Snake_move(&snake, &apple, box);
+
+            render(&snake, &apple);
+
+            sleepMillis(150);
         }
+    }
 
-        render(&snake, &apple);
-    } while (keyCode != '\n');
+    Console_showCursor();
 
     return 0;
 }

@@ -3,10 +3,12 @@
 
 enum Directions { UP, DOWN, LEFT, RIGHT };
 
-#define BUTTON_UP 'w'
-#define BUTTON_DOWN 's'
-#define BUTTON_LEFT 'a'
-#define BUTTON_RIGHT 'd'
+#define BUTTON_MOVE_UP 'w'
+#define BUTTON_MOVE_DOWN 's'
+#define BUTTON_MOVE_LEFT 'a'
+#define BUTTON_MOVE_RIGHT 'd'
+#define BUTTON_QUIT_GAME 'q'
+#define BUTTON_PAUSE_GAME 'p'
 
 typedef struct {
     int w;
