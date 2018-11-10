@@ -1,6 +1,7 @@
 #ifndef BODY_H
 #define BODY_H
 
+#include "points.h"
 #include "utils.h"
 
 typedef struct {

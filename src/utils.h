@@ -11,20 +11,12 @@ enum Directions { UP, DOWN, LEFT, RIGHT };
 #define BUTTON_PAUSE_GAME 'p'
 
 typedef struct {
-    int w;
-    int h;
+    unsigned int w, h;
 } Box;
 
 typedef struct {
-    unsigned int R;
-    unsigned int G;
-    unsigned int B;
+    unsigned int R, G, B;
 } Color;
-
-typedef struct {
-    int x;
-    int y;
-} Point2D;
 
 int getRandomInt(int min, int max);
 void sleepMillis(unsigned long int milliseconds);

@@ -1,6 +1,7 @@
 #ifndef CHANGE_POINTS_H
 #define CHANGE_POINTS_H
 
+#include "points.h"
 #include "utils.h"
 
 typedef struct {

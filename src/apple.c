@@ -19,6 +19,7 @@ Apple Apple_spawn(Body snakeBody, Box box) {
     for (int i = 0; i < snakeBody.length; i++) {
         BodyPart part = snakeBody.parts[i];
 
+        // todo: test it -_-
         if (part.location.x == apple.location.x && part.location.y == apple.location.y) {
             return Apple_spawn(snakeBody, box);
         }

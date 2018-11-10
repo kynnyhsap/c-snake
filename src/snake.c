@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "apple.h"
+#include "points.h"
 #include "snake.h"
 
 void Snake_render(Snake *snake) {
@@ -35,6 +36,22 @@ bool Snake_directionsOpposite(enum Directions d1, enum Directions d2) {
 }
 
 bool Snake_directionsEquals(enum Directions d1, enum Directions d2) { return d1 == d2; }
+
+bool Snake_eatingSelf(Snake *snake) {
+    for (int i = 0; i < snake->body.length; i++) {
+        const BodyPart part1 = snake->body.parts[i];
+
+        for (int j = 0; j < snake->body.length; j++) {
+            const BodyPart part2 = snake->body.parts[j];
+
+            if (j != i && Points_equals(part1.location, part2.location)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
 
 void Snake_changeDirection(Snake *snake, enum Directions newDirection) {
     if (Snake_directionsOpposite(snake->direction, newDirection) ||
@@ -118,8 +135,7 @@ void Snake_move(Snake *snake, Apple *apple, Box box) {
         for (int j = 0; j < snake->changePoints.length; j++) {
             ChangePoint changePoint = snake->changePoints.list[j];
 
-            if (changePoint.point.x == snake->body.parts[i].location.x &&
-                changePoint.point.y == snake->body.parts[i].location.y &&
+            if (Points_equals(changePoint.point, snake->body.parts[i].location) &&
                 changePoint.from == snake->body.parts[i].direction) {
                 snake->body.parts[i].direction = changePoint.to;
 
@@ -130,5 +146,9 @@ void Snake_move(Snake *snake, Apple *apple, Box box) {
         }
 
         Snake_tryEatApple(snake, apple, box);
+    }
+
+    if (Snake_eatingSelf(snake)) {
+        exit(1);  // todo: remake to `game over` =)
     }
 }

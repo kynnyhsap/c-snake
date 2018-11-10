@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "body.h"
+#include "points.h"
 #include "utils.h"
 
 typedef struct {
