@@ -47,34 +47,84 @@ int main() {
 
         if (Console_isKeyDown()) {
             char key = getchar();
+            Console_lockInput();
+
+            Console_setCursorPosition(2, 1);
+            Console_setCursorAttribute(FG_CYAN);
+            printf("%c", key);
 
             switch (key) {
                 case BUTTON_MOVE_UP: {
+                    if (!snake.canChangeDirection) break;
+
                     Snake_changeDirection(&snake, UP);
+
+                    if (snake.canChangeDirection) {
+                        Snake_move(&snake, &apple, box);
+                    }
+
+                    render(&snake, &apple);
+                    sleepMillis(150);
+                    Console_unlockInput();
+
                     break;
                 }
                 case BUTTON_MOVE_DOWN: {
+                    if (!snake.canChangeDirection) break;
+
                     Snake_changeDirection(&snake, DOWN);
+
+                    if (snake.canChangeDirection) {
+                        Snake_move(&snake, &apple, box);
+                    }
+
+                    render(&snake, &apple);
+                    sleepMillis(150);
+                    Console_unlockInput();
+
                     break;
                 }
                 case BUTTON_MOVE_LEFT: {
+                    if (!snake.canChangeDirection) break;
+
                     Snake_changeDirection(&snake, LEFT);
+                    if (snake.canChangeDirection) {
+                        Snake_move(&snake, &apple, box);
+                    }
+
+                    render(&snake, &apple);
+                    sleepMillis(150);
+                    Console_unlockInput();
+
                     break;
                 }
                 case BUTTON_MOVE_RIGHT: {
+                    if (!snake.canChangeDirection) break;
+
                     Snake_changeDirection(&snake, RIGHT);
+                    if (snake.canChangeDirection) {
+                        Snake_move(&snake, &apple, box);
+                    }
+
+                    render(&snake, &apple);
+                    sleepMillis(150);
+                    Console_unlockInput();
+
                     break;
                 }
                 case BUTTON_QUIT_GAME: {
                     quitGame = true;
+
                     break;
                 }
             }
+
         } else {
-            Snake_move(&snake, &apple, box);
+            if (snake.canChangeDirection) {
+                Snake_move(&snake, &apple, box);
+            }
 
             render(&snake, &apple);
-
             sleepMillis(150);
         }
     }

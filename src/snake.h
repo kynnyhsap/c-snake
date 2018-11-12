@@ -9,6 +9,7 @@
 
 typedef struct {
     unsigned int score;
+    bool canChangeDirection;
     Body body;
     ChangePointsList changePoints;
     enum Directions direction;
