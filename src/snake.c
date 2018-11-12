@@ -51,6 +51,17 @@ bool Snake_eatingSelf(Snake *snake) {
     return false;
 }
 
+bool Snake_touchingWall(Snake *snake, Box box) {
+    const BodyPart head = snake->body.parts[0];
+
+    if (head.location.x < 0) return true;
+    if (head.location.x >= (int)box.w) return true;
+    if (head.location.y < 0) return true;
+    if (head.location.y >= (int)box.h) return true;
+
+    return false;
+}
+
 void Snake_changeDirection(Snake *snake, enum Directions newDirection) {
     snake->canChangeDirection = false;
 
@@ -153,7 +164,7 @@ void Snake_move(Snake *snake, Apple *apple, Box box) {
         Snake_tryEatApple(snake, apple, box);
     }
 
-    if (Snake_eatingSelf(snake)) {
+    if (Snake_eatingSelf(snake) || Snake_touchingWall(snake, box)) {
         // todo: remake to `game over` =)
         Console_unlockInput();  // nessesary reset
         exit(1);

@@ -27,6 +27,8 @@ int main() {
 
     struct ConsoleSize consoleSize = Console_size();
 
+    unsigned int renderDelay = 150;
+
     Box box = {
         .w = consoleSize.columns,
         .h = consoleSize.rows * 2,
@@ -64,7 +66,7 @@ int main() {
                     }
 
                     render(&snake, &apple);
-                    sleepMillis(150);
+                    sleepMillis(renderDelay);
                     Console_unlockInput();
 
                     break;
@@ -79,7 +81,7 @@ int main() {
                     }
 
                     render(&snake, &apple);
-                    sleepMillis(150);
+                    sleepMillis(renderDelay);
                     Console_unlockInput();
 
                     break;
@@ -93,7 +95,7 @@ int main() {
                     }
 
                     render(&snake, &apple);
-                    sleepMillis(150);
+                    sleepMillis(renderDelay);
                     Console_unlockInput();
 
                     break;
@@ -107,13 +109,19 @@ int main() {
                     }
 
                     render(&snake, &apple);
-                    sleepMillis(150);
+                    sleepMillis(renderDelay);
                     Console_unlockInput();
 
                     break;
                 }
                 case BUTTON_QUIT_GAME: {
                     quitGame = true;
+                    Console_unlockInput();
+
+                    break;
+                }
+                default: {
+                    Console_unlockInput();
 
                     break;
                 }
@@ -125,7 +133,7 @@ int main() {
             }
 
             render(&snake, &apple);
-            sleepMillis(150);
+            sleepMillis(renderDelay);
         }
     }
 
