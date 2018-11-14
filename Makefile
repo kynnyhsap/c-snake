@@ -4,9 +4,10 @@ LIBS = -lm -lprogbase
 
 EXECUTABLE = ./a.out
 SOURCE = ./src/*.c
+INCLUDE = ./include
 
 build:
-	@ $(CC) -o $(EXECUTABLE) $(CFLAGS) $(LIBS) $(SOURCE) 
+	@ $(CC) -o $(EXECUTABLE) $(CFLAGS) $(LIBS) $(SOURCE) -I$(INCLUDE)
 
 clean:
 	@ rm -rf $(EXECUTABLE)
